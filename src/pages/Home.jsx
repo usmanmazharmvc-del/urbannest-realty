@@ -10,16 +10,41 @@ const Home = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-navy to-blue text-white py-20">
-        <div className="container-custom text-center relative z-10">
-          <h1 className="text-white mb-4 text-4xl md:text-5xl">Find Your Dream Property Today</h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+      {/* Luxury Hero Image Section - Reduced size at the start with only text */}
+      <div className="relative h-[60vh] md:h-[70vh] flex items-center justify-center">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url('https://images.pexels.com/photos/2587054/pexels-photo-2587054.jpeg?auto=compress&cs=tinysrgb&w=1600')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          {/* Dark Overlay for text readability */}
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        
+        {/* Hero Content - Only Text, No Buttons */}
+        <div className="container-custom relative z-10 text-center text-white">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold">
+            Experience <span className="text-gold">Ultimate Luxury</span>
+          </h1>
+        </div>
+      </div>
+      
+      {/* Top Hero Section with Gradient Background (Blue Strip) */}
+      <div className="bg-gradient-to-r from-navy to-blue text-white py-16">
+        <div className="container-custom text-center">
+          <h1 className="text-white mb-4 text-3xl md:text-4xl">
+            Find Your Dream <span className="text-gold">Luxury Property</span>
+          </h1>
+          <p className="text-lg mb-6 max-w-2xl mx-auto">
             Explore premium homes and high-return investment opportunities with UrbanNest Realty.
           </p>
           <div className="flex gap-4 justify-center">
             <Link to="/properties" className="btn-primary">Browse Properties</Link>
-            <Link to="/contact" className="bg-white text-navy font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-all">
+            <Link to="/contact" className="bg-white/20 backdrop-blur-sm text-white font-semibold py-3 px-6 rounded-lg hover:bg-white/30 transition-all">
               Book Consultation
             </Link>
           </div>
@@ -113,16 +138,8 @@ const Home = () => {
         </div>
       </div>
       
-      {/* CTA Section */}
-      <div className="bg-gradient-to-r from-navy to-blue text-white py-16">
-        <div className="container-custom text-center">
-          <h2 className="text-white mb-3">Ready to Invest in Your Future?</h2>
-          <p className="text-gray-200 mb-8">Let our experts guide you to the perfect property or investment opportunity.</p>
-          <Link to="/contact" className="bg-gold text-navy font-semibold py-3 px-8 rounded-lg hover:bg-opacity-90 transition-all inline-block">
-            Contact Us Today
-          </Link>
-        </div>
-      </div>
+      {/* CTA Section - COMPLETELY REMOVED */}
+      
     </div>
   )
 }
