@@ -1,16 +1,20 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { propertyImages } from '../assets/images'
+import { getFeaturedProperties } from '../services/propertyService'
+import PropertyCard from '../components/PropertyCard'
 
 const Home = () => {
-  const featuredProperties = [
-    { id: 1, title: 'Modern Luxury Villa', price: 850000, location: 'Beverly Hills, CA', beds: 5, baths: 4, image: propertyImages.modernVilla, badge: 'Featured' },
-    { id: 2, title: 'Downtown Penthouse', price: 1250000, location: 'Manhattan, NY', beds: 3, baths: 3, image: propertyImages.luxuryApartment, badge: 'Luxury' },
-    { id: 3, title: 'Suburban Family Home', price: 475000, location: 'Austin, TX', beds: 4, baths: 2.5, image: propertyImages.suburbanHome },
-  ]
+  const [featuredProperties, setFeaturedProperties] = useState([])
+
+  useEffect(() => {
+    // Load properties from central service
+    const properties = getFeaturedProperties()
+    setFeaturedProperties(properties)
+  }, [])
 
   return (
     <div>
-      {/* Luxury Hero Image Section - Reduced size at the start with only text */}
+      {/* Luxury Hero Image Section - TOP OF PAGE */}
       <div className="relative h-[60vh] md:h-[70vh] flex items-center justify-center">
         {/* Background Image */}
         <div 
@@ -29,14 +33,14 @@ const Home = () => {
         <div className="container-custom relative z-10 text-center text-white">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold">
             Experience <span className="text-gold">Ultimate Luxury</span>
-          </h1>
-          <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl lg:text-xl text-gray-150 max-w-3xl mx-auto">
              Our exclusive collection of premium estates and luxury residences.
-          </p>
+            </p>         
+          </h1>
         </div>
       </div>
       
-      {/* Top Hero Section with Gradient Background (Blue Strip) */}
+      {/* Blue Strip Section */}
       <div className="bg-gradient-to-r from-navy to-blue text-white py-16">
         <div className="container-custom text-center">
           <h1 className="text-white mb-4 text-3xl md:text-4xl">
@@ -77,37 +81,24 @@ const Home = () => {
         </div>
       </div>
       
-      {/* Featured Properties */}
+      {/* Featured Properties Section */}
       <div className="bg-lightGray py-16">
         <div className="container-custom">
-          <h2 className="text-center text-navy mb-12 text-3xl">Featured Properties</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProperties.map(property => (
-              <div key={property.id} className="bg-white rounded-lg shadow-soft overflow-hidden hover:shadow-card transition-all">
-                <div className="relative h-56 overflow-hidden">
-                  <img 
-                    src={property.image} 
-                    alt={property.title}
-                    className="w-full h-full object-cover"
-                  />
-                  {property.badge && (
-                    <span className="absolute top-3 right-3 bg-gold text-navy text-xs font-semibold px-2 py-1 rounded">
-                      {property.badge}
-                    </span>
-                  )}
-                </div>
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold text-xl text-navy">{property.title}</h3>
-                    <span className="text-gold font-bold text-lg">${property.price.toLocaleString()}</span>
-                  </div>
-                  <p className="text-gray-600 mb-2">{property.location}</p>
-                  <p className="text-gray-500 text-sm mb-4">{property.beds} beds | {property.baths} baths</p>
-                  <button className="w-full btn-secondary text-sm py-2">View Details</button>
-                </div>
-              </div>
-            ))}
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-navy text-3xl">Featured Properties</h2>
+            <Link to="/properties" className="text-gold hover:underline">View All →</Link>
           </div>
+          
+          {featuredProperties.length === 0 ? (
+            <div className="text-center py-10">Loading properties...</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredProperties.slice(0, 6).map(property => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+            </div>
+          )}
+          
           <div className="text-center mt-10">
             <Link to="/properties" className="btn-secondary inline-block">View All Properties</Link>
           </div>
@@ -140,9 +131,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      
-      {/* CTA Section - COMPLETELY REMOVED */}
-      
     </div>
   )
 }
